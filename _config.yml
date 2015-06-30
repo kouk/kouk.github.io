@@ -31,6 +31,14 @@ future:      true
 highlighter: pygments
 markdown:    rdiscount
 
+defaults:
+  -
+    scope:
+      path: ""
+      type: "post"
+    values:
+      layout: "post"
+
 # https://github.com/mojombo/jekyll/wiki/Permalinks
 permalink:    /:year/:month/:day/:title/
 
