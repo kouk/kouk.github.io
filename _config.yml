@@ -38,6 +38,11 @@ defaults:
       type: "post"
     values:
       layout: "post"
+  -
+    scope:
+      path: ""
+    values:
+      comments: true
 
 # https://github.com/mojombo/jekyll/wiki/Permalinks
 permalink:    /:year/:month/:day/:title/
