@@ -50,3 +50,19 @@ permalink:    /:year/:month/:day/:title/
 include: [".htaccess"]
 exclude: ["lib", "config.rb", "Capfile", "config", "log", "Rakefile", "Rakefile.rb", "tmp"]
 encoding: utf-8
+
+prose:
+    siteurl: "http://kouk.surukle.me"
+    media: "assets"
+    metadata:
+        _posts:
+          - name: "layout"
+            field:
+              element: "hidden"
+              value: "post"
+          - name: "tags"
+            field:
+                element: "multiselect"
+                alterable: true
+                options:
+                    - cooking
