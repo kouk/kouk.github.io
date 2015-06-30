@@ -29,13 +29,13 @@ excerpt: !ruby/object:Hpricot::Doc
   options: {}
 ---
 <p>Sometime you have a playbook that's all like:</p>
-<p>[code gutter="false"]<br />
----<br />
-- hosts: all<br />
-...<br />
-[/code]</p>
+<p>{% highlight yaml %}
+---
+- hosts: all
+...
+{% endhighlight %}</p>
 <p>and in your inventory you've got a long list of hosts that <code>all</code> would expand to. What if you want to just run the playbook for one or two hosts? Then <a href="http://stackoverflow.com/a/18199029">tip by Tybstar</a> is valuable, because you can apparently just add a comma separated list of host names instead of an inventory file name. If you only want one host just add a comma after the name:</p>
-<p>[code gutter="false" language="bash"]<br />
-ansible-playbook -i &quot;localhost,&quot; playbook.yml<br />
-[/code]</p>
+<p>{% highlight bash %}
+ansible-playbook -i 'localhost' playbook.yml
+{% endhighlight %}</p>
 <p>As you can see this comes in handy if you just want to run a playbook against localhost.</p>

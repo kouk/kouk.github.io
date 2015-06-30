@@ -33,17 +33,18 @@ excerpt: !ruby/object:Hpricot::Doc
   options: {}
 ---
 <p>Just a quick recipe to send rendered graphs from <a href="https://github.com/graphite-project/graphite-web">Graphite</a> to <a href="http://slack.com">Slack</a>, using your <a href="http://www.google.gr/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=1&amp;cad=rja&amp;uact=8&amp;ved=0CCMQFjAA&amp;url=http%3A%2F%2Funixhelp.ed.ac.uk%2FCGI%2Fman-cgi%3Fcrontab%2B5&amp;ei=HtFHVOKmBvGV7Aa90oC4CA&amp;usg=AFQjCNGk93Rm-hxvR6tp7R8BHYKuB40o4g&amp;bvm=bv.77880786,d.ZGU">crontab(5)</a> and <a href="https://my.slack.com/services/new/incoming-webhook">Incoming Webhooks</a>:</p>
-<p>[code gutter="false"]<br />
-0  5  *  *  * /path/to/script.sh &gt;/dev/null<br />
-[/code]</p>
+<p>{% highlight text %}
+0  5  *  *  * /path/to/script.sh >/dev/null
+{% endhighlight %}
 <p>This will send a message to your webhook's default channel every day at 5am, and Slack show you a preview of the graph in the channel. For completeness' sake (!) here's the contents of `/path/to/script.sh`:</p>
-<p>[code gutter="false" language="bash"]#!/bin/sh<br />
-METRIC=&quot;stats.gauges.somemetric&quot;<br />
-OPTS=&quot;from=-2hours&amp;until=now&amp;width=400&amp;height=250&quot;<br />
-BASE=&quot;https://graph.host.com/render&quot;<br />
-GRAPH=&quot;${BASE}?${OPTS}&amp;target=${METRIC}&amp;title=${METRIC}&quot;<br />
-PAYLOAD=&quot;payload={\&quot;text\&quot;: \&quot;&lt;$GRAPH|daily metric graph&gt;\&quot;}&quot;<br />
-curl -s --dump-header - -X POST --data-urlencode &quot;$PAYLOAD&quot; \<br />
- 'https://my.slack.com/services/hooks/incoming-webhook?token=XXXXXXXXXXXXX'<br />
-[/code]</p>
+<p>{% highlight bash %}
+#!/bin/sh
+METRIC='stats.gauges.somemetric'
+OPTS='from=-2hours&until=now&width=400&height=250'
+BASE='https://graph.host.com/render'
+GRAPH='${BASE}?${OPTS}&target=${METRIC}&title=${METRIC}'
+PAYLOAD='payload={\'text\': \'<$GRAPH|daily metric graph>\'}'
+curl -s --dump-header - -X POST --data-urlencode '$PAYLOAD'
+ 'https://my.slack.com/services/hooks/incoming-webhook?token=XXXXXXXXXXXXX'
+{% endhighlight %}
 <p>UPDATE: the initial version had a bug with single quotes which ought to have been double quotes. Thanks to GregTheRules for catching that.</p>
