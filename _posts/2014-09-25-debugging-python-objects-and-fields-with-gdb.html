@@ -30,4 +30,4 @@ excerpt: !ruby/object:Hpricot::Doc
 ---
 <p>Sometimes your python code crashes or runs into a deadlock. For this the <a title="Debugging Python with GDB" href="https://wiki.python.org/moin/DebuggingWithGdb">Python Extension for GDB 7 </a>are very handy. On one mainstream Linux distribution this was automatically available when the devel/debug package for python was installed. But this extension has certain limitations, and one that I found quite important was the ability to print individual fields of objects. The "py-print" command truncates it's output so for a relatively complex object you can't really see the member attributes.</p>
 <p>After looking at the source for this extension I saw it would be relatively easy to fix this. I wrote another command that actually goes through the object's dictionary and prints out the requested field only. Here's the gist:</p>
-<p>https://gist.github.com/kouk/5c2e725bef8b54aae6e0</p>
+<p>{% gist kouk/5c2e725bef8b54aae6e0 %}</p>
