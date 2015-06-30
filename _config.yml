@@ -38,6 +38,13 @@ defaults:
       type: "post"
     values:
       layout: "post"
+      type: "post"
+      author:
+        login: kouk
+        email: koukopoulos@gmail.com
+        display_name: Konstantinos Koukopoulos
+        first_name: ''
+        last_name: ''
   -
     scope:
       path: ""
@@ -56,13 +63,27 @@ prose:
     media: "assets"
     metadata:
         _posts:
-          - name: "layout"
+          - name: "categories"
             field:
-              element: "hidden"
-              value: "post"
+                element: "multiselect"
+                label: "categories"
+                alterable: true
+                options:
+                    - cooking
           - name: "tags"
             field:
                 element: "multiselect"
                 alterable: true
+                label: "tags"
                 options:
                     - cooking
+          - name: "published"
+            field:
+                element: "checkbox"
+                label: "published"
+                value: false
+          - name: "title"
+            field:
+                element: "text"
+                label: "title"
+                placeholder: "post title"
