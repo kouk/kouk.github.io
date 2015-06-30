@@ -28,7 +28,7 @@ links:
 # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 timezone:    Europe/Athens
 future:      true
-pygments:    false
+highlighter: pygments
 markdown:    rdiscount
 
 # https://github.com/mojombo/jekyll/wiki/Permalinks
