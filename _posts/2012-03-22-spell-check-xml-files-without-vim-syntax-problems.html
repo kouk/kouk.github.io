@@ -1,0 +1,65 @@
+---
+layout: post
+title: Spell check XML files without VIM syntax problems
+date: 2012-03-22 16:32:40.000000000 +02:00
+categories:
+- memo
+- programming
+- tech
+tags:
+- greek
+- highlighting
+- hunspell
+- "διόρθωση"
+- "ελληνικά"
+- myspell
+- spell check
+- spelling
+- syntax
+- vim
+- xml
+- xml editor
+- xmlmind
+- xmlmind xml editor
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '600927'
+  geo_latitude: '37.979180'
+  geo_longitude: '23.716647'
+  geo_accuracy: '4584'
+  geo_address: " "
+  geo_public: '1'
+  tagazine-media: a:7:{s:7:"primary";s:0:"";s:6:"images";a:0:{}s:6:"videos";a:0:{}s:11:"image_count";s:1:"0";s:6:"author";s:6:"600927";s:7:"blog_id";s:7:"5739772";s:9:"mod_stamp";s:19:"2012-03-22
+    16:32:40";}
+  publicize_results: a:1:{s:7:"twitter";a:1:{i:13858422;a:2:{s:7:"user_id";s:11:"koukopoulos";s:7:"post_id";s:18:"182867406153195520";}}}
+  _wpas_done_twitter: '1'
+  _oembed_94c45ff7dae69350d31e22cc152fe7f1: "{{unknown}}"
+author:
+  login: kouk
+  email: koukopoulos@gmail.com
+  display_name: Konstantinos Koukopoulos
+  first_name: ''
+  last_name: ''
+excerpt: !ruby/object:Hpricot::Doc
+  options: {}
+---
+<p>I've been using <a href="http://www.xmlmind.com/xmleditor/">XMLMind's XML Editor</a> lately to write some documentation in the <a href="http://docbook.org/">Docbook</a> XML format. The editor has very good support and I'm very glad to be using it. There's one catch though, and it's to do with the spell check support. XMLMind have implemented their own system for which there are no Greek dictionaries available. Not having the time to go and create one myself I looked at other solutions.</p>
+<p>I have the <a href="http://hunspell.sourceforge.net/">Hunspell</a> dictionaries on my system anyway but the command line program that comes with Hunspell garbles Greek characters in the terminal. I don't know what that's about and Google didn't come up with any quick solutions. So my next try was using <a href="http://vimdoc.sourceforge.net/htmldoc/spell.html">spell check support in VIM 7</a> and after a bit of trial and error I'm happy with the result. So here's what I did:</p>
+<ol>
+<li>Download a Myspell compatible Greek dictionary word list and affix file, either <a href="http://elspell.math.upatras.gr/?section=oofficespell&amp;subsection=general">the original one by Steve Stavropoulos</a> or <a href="http://daremon.gr/tools/open_office_greek_english_spelling/">the one by Dimitrios Gianitsaros which combines the Greek words and English words as well as provides for Greek fully capitalized words with no accents</a>.</li>
+<li><code>:mkspell el /path/to/hunspell/dictionaries/el_GR</code></li>
+<li>make sure the resulting <code>.spl</code> file gets copied to <code>~/.vim/spell</code></li>
+<li>create the file <code>~/.vim/after/syntax/xml.vim</code> as described below.</li>
+<li>Open an XML file and execute <code>:set spell spelllang=el,en</code> or something to that effect.</li>
+</ol>
+<p>One little problem with spell checking XML files in VIM is that the syntax highlighting interferes in a sub-optimal way. For example by default the text content of elements is not spell checked. Another example is that URL's in <code>href</code> and <code>xmlns</code> attributes are reported as mistakes. These problems can be solved by the following syntax commands:</p>
+<pre>
+syn match xmlHref +href="[^"]*"+ contained contains=xmlAttrib,@NoSpell
+syn match xmlXmlns +xmlns\(:[a-z]*\)\?="[^"]*"+ contained contains=xmlAttrib,@NoSpell
+syn cluster xmlStartTagHook add=xmlHref
+syn cluster xmlStartTagHook add=xmlXmlns
+syn spell toplevel
+</pre>
+<p>Now you should be good to go with spell checking XML in VIM. Another little detail about my work-flow is that I have configured <code>gvim</code> as a helper application in XMLMind XML Editor and that permits me to type "Ctrl-Shift-D" while editing an XML file and get the file opened in VIM ready to be spell checked. After my corrections the file is reloaded in the XML editor.</p>

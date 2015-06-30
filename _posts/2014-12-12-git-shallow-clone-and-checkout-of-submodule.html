@@ -1,0 +1,36 @@
+---
+layout: post
+title: 'git: shallow clone and sparse checkout of submodule'
+date: 2014-12-12 12:22:19.000000000 +02:00
+categories: []
+tags:
+- git
+- shallow
+- submodule
+status: publish
+type: post
+published: true
+meta:
+  _wpas_skip_facebook: '1'
+  _wpas_skip_google_plus: '1'
+  _wpas_skip_linkedin: '1'
+  _wpas_skip_tumblr: '1'
+  _wpas_skip_path: '1'
+  _rest_api_published: '1'
+  _rest_api_client_id: "-1"
+  publicize_twitter_user: koukopoulos
+  publicize_twitter_url: http://t.co/jfGqqYQ6aF
+  _wpas_done_14391: '1'
+  _publicize_done_external: a:1:{s:7:"twitter";a:1:{i:13858422;b:1;}}
+author:
+  login: kouk
+  email: koukopoulos@gmail.com
+  display_name: Konstantinos Koukopoulos
+  first_name: ''
+  last_name: ''
+excerpt: !ruby/object:Hpricot::Doc
+  options: {}
+---
+<div id="file-how-to-add-a-submodule-with-shallow-checkout-and-shallow-clone-LC1" class="line">If you have a huge repository (in size and in history) and want to add a subfolder to your project as a submodule you can follow <a href="https://gist.github.com/kouk/3ba77edce12e95c1f779#file-shallow-submodule-add">the code in this example</a> to save time and space using git's <a href="http://stackoverflow.com/questions/tagged/shallow-clone+git">shallow clone</a> and <a href="http://stackoverflow.com/questions/tagged/sparse-checkout+git">sparse checkout</a> feature. It is a bit more complicated in this example because I assume that you want your submodule to track a non-default branch, called `mybranch`, instead of the `master` branch. Also I assume you already have a checkout of  our huge repository somewhere, so it can be used as an argument to the <code>--reference</code> option of <code><a href="http://www.git-scm.com/docs/git-clone">git clone</a></code>. Things could probably get a lot simpler when using the default branch and just using a normal clone (with no reference  repo). After following the commands in these examples you can use `git submodule update` and `git submodule update --remote` as normal.</div>
+<div class="line"></div>
+<div class="line">{% gist kouk/3ba77edce12e95c1f779 shallow-submodule-add %}</div>

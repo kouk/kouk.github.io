@@ -1,0 +1,47 @@
+---
+layout: post
+title: 'sed memo: output boilerplate around each line in a file'
+date: 2011-10-03 13:47:43.000000000 +03:00
+categories:
+- memo
+- tech
+tags:
+- boilerplate
+- csplit
+- input
+- line
+- memo
+- sed
+- tip
+- unix
+status: publish
+type: post
+published: true
+meta:
+  geo_accuracy: '4584'
+  geo_longitude: '23.716647'
+  geo_public: '1'
+  geo_address: "Αθήνα, Ελλάς"
+  _edit_last: '600927'
+  geo_latitude: '37.979180'
+  _wpas_done_twitter: '1'
+author:
+  login: kouk
+  email: koukopoulos@gmail.com
+  display_name: Konstantinos Koukopoulos
+  first_name: ''
+  last_name: ''
+excerpt: !ruby/object:Hpricot::Doc
+  options: {}
+---
+<p>Given three files <code>xx0{0,1,2}</code> the following <a href="http://pubs.opengroup.org/onlinepubs/000095399/utilities/sed.html">sed</a> script will first output the contents of file <code>xx00</code> and then for each line in the input it will output <code>xx01</code>, the line and <code>xx02</code>. The substition on line 5 is optional and can be expanded to include more commands or removed completely.</p>
+<p>[sourcecode]<br />
+1 r xx00<br />
+1 !r xx02<br />
+$ !r xx01<br />
+x<br />
+1 d<br />
+s/foo/baz/<br />
+[/sourcecode]</p>
+<p>The filenames are the default output filenames of the <a href="http://pubs.opengroup.org/onlinepubs/000095399/utilities/csplit.html">csplit</a> command which could be helpful in related scenarios to the above.</p>
+<p>Also it would be easy to add a footer to the above script, but I did not need it personally at this time.</p>

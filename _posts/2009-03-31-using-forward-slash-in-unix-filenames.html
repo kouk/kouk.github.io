@@ -1,0 +1,69 @@
+---
+layout: post
+title: using forward slash in unix filenames
+date: 2009-03-31 12:43:29.000000000 +03:00
+categories:
+- tech
+tags:
+- filename
+- font
+- slash
+- typography
+- unicode
+- unix
+- vim
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '600927'
+  reddit: a:2:{s:5:"count";s:1:"0";s:4:"time";s:10:"1277048051";}
+  delicious: a:3:{s:5:"count";s:1:"0";s:9:"post_tags";s:0:"";s:4:"time";s:10:"1277049573";}
+  _oembed_c88396ad277c16190d437e42f52972b7: "{{unknown}}"
+  _oembed_404870f5c10c5b51d76a2f128bfc0a13: "{{unknown}}"
+  _oembed_08638fa766ba15679fc90750a2d7248c: "{{unknown}}"
+  _oembed_2a1071a24c6e0c9491ca8321699acb55: "{{unknown}}"
+  _oembed_239a7f44d5bca20d5bba0f6457ddc851: "{{unknown}}"
+  _oembed_5157da7bee2add5863080687d2f6f615: "{{unknown}}"
+  _oembed_f6a32b15e3e59f8c8bf328263b90f275: "{{unknown}}"
+  _oembed_e7722671ec20c6f06f8cdec55558cccf: "{{unknown}}"
+  _oembed_5b640fd190f8de6b6da4d1c4d5f4b143: "{{unknown}}"
+  _oembed_0443a892606955fb228ba957678e4eee: "{{unknown}}"
+  _oembed_08abe9984135593cc14ab6d9c9070f47: "{{unknown}}"
+  _oembed_6b65e4ceceaff77ad9fbc9ab22fe3f04: "{{unknown}}"
+  _oembed_fedb7f722c1ae584f3437ec6bcde1f91: "{{unknown}}"
+  _oembed_23d5c43d644ea8e873472724f18a69a2: "{{unknown}}"
+  _oembed_1e3eea2dd502b127ad3d48f17a46d077: "{{unknown}}"
+  _oembed_0972cc584c8db60957f7a230c972a25c: "{{unknown}}"
+  _oembed_2f0e315f21dbba0a1b507c2157709873: "{{unknown}}"
+  _oembed_e53362d63b8b4be14218b63b06468784: "{{unknown}}"
+  _oembed_e68d3d97935db19149f6ba9ccd5f9656: "{{unknown}}"
+  _oembed_23ca6b33dcbb11c94ce3204fb3137d12: "{{unknown}}"
+  _oembed_d2c10fed0a6ca86412062ed544a02546: "{{unknown}}"
+  _oembed_fb09c3b2a42c42b9147b9e205baaaf1c: "{{unknown}}"
+  _oembed_743d8f437ecbd7c2b3e52d4c699b2b0a: "{{unknown}}"
+author:
+  login: kouk
+  email: koukopoulos@gmail.com
+  display_name: Konstantinos Koukopoulos
+  first_name: ''
+  last_name: ''
+excerpt: !ruby/object:Hpricot::Doc
+  options: {}
+---
+<p>Ok, I was automating the creation of some <a href="http://www.vorbis.com/">ogg</a> files based on title's appearing in a text file. Doing it myself, with mplayer and oggenc, I hadn't taken into account many of the caveats that preexisting ripping/encoding tools take care of, like the problem of forward slashes in filenames stored on a unix filesystem. But the good thing with doing it yourself is that you don't have to automatically adopt the presuppositions that appear in preexisting tools.</p>
+<p>One such presupposition is that you have to replace special characters in filenames, like quotes or forward slashes, so that they can be accessible to shell users. Well I have to say that shells and file managers are pretty advanced these days and you don't really have to replace anything anymore. The only exception is forward slashes, which absolutely cannot appear in a filename on a unix system. Most tools replace the slash with an <a href="http://en.wikipedia.org/wiki/Underscore">underscore</a> character. I find that kind of lame.</p>
+<p>In Unicode, <a href="http://en.wikipedia.org/wiki/Slash_(punctuation)">forward slash</a> is the character <a href="http://www.fileformat.info/info/unicode/char/002f/index.htm">'SOLIDUS' (U+002F)</a>, although according to wikipedia, calling the http://en.wikipedia.org/wiki/Slash_(punctuation) 'solidus' <a href="http://en.wikipedia.org/wiki/Solidus_(punctuation)">"contradicts long-established English typesetting terminology"</a>.</p>
+<p>So, since replacement of the slash is required in filenames, we can keep the visual nature of the forward slash by using the typographic <a href="http://en.wikipedia.org/wiki/Solidus_(punctuation)">solidus</a> character as a replacement, which in unicode is called <a href="http://www.fileformat.info/info/unicode/char/2044/index.htm">'SOLIDUS' (U+002F)</a>. Here is the difference between the two (in the typeface your browser is using):</p>
+<table border="1">
+<tr>
+<th>Slash (U+002f)</th>
+<th>Solidus (U+2044)</th>
+</tr>
+<tr>
+<td align="center"><font size="30">/</font></td>
+<td align="center"><font size="30">⁄</font></td>
+</tr>
+</table>
+<p></p>
+<p>In <a href="http://www.vim.org">VIM</a> you can input the solidus by typing Ctrl+V, u, 2044 in command mode.</p>

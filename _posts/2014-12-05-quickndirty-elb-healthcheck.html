@@ -1,0 +1,40 @@
+---
+layout: post
+title: Quick'n'dirty ELB healthcheck
+date: 2014-12-05 18:29:51.000000000 +02:00
+categories:
+- ops
+- programming
+- tech
+tags:
+- autoscaling
+- aws
+- elb
+- monitoring
+- shell script
+- systemd
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '600927'
+  geo_public: '0'
+  publicize_twitter_url: http://t.co/wBy1YbQrpD
+  publicize_twitter_user: koukopoulos
+  _wpas_done_14391: '1'
+  _publicize_done_external: a:1:{s:7:"twitter";a:1:{i:13858422;b:1;}}
+author:
+  login: kouk
+  email: koukopoulos@gmail.com
+  display_name: Konstantinos Koukopoulos
+  first_name: ''
+  last_name: ''
+excerpt: !ruby/object:Hpricot::Doc
+  options: {}
+---
+<p>Sometimes you have a service you are running on multiple instances in an <a href="https://aws.amazon.com/autoscaling/">AWS autoscaling</a> group, and you want to monitor the application health with <a href="https://aws.amazon.com/elasticloadbalancing/">ELB</a> so that if an instance become unhealthy your autoscaling group will launch a new instance. But if the service doesn't expose any ports, such as a web server would, ELB health-checks cannot work because they rely on connecting via TCP or HTTP to monitor the health of it's instances. So? If you can check the health of your service with some local command or script then all you need is the files in <a href="https://gist.github.com/kouk/d12753757d506f97e13f">this gist</a> and you're off!</p>
+<p>The idea is to use (or abuse) <a href="http://www.freedesktop.org/software/systemd/man/systemd.socket.html"><code>systemd</code>'s socket activation</a> feature to run a script whenever ELB asks for a certain URL on a certain port. Ideally this port should not be accessible from the public internet or really anywhere else than where ELB will be connecting from. But this is outside the scope of this document (you are running your instances in a <a href="http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Introduction.html">VPC</a> right?). </p>
+<p>So, assuming <code>/path/to/somecommand</code> is a an executable that will succeed or fail depending on the health of your service, you need the following script to respond to ELB health checks:</p>
+<p>{% gist kouk/d12753757d506f97e13f status.sh %}</p>
+<p>Then you configure the <a href="https://gist.github.com/kouk/d12753757d506f97e13f#file-status-socket"><code>status.socket</code></a> and <a href="https://gist.github.com/kouk/d12753757d506f97e13f#file-status-service"><code>status@.service</code></a> unit files (usually in <code>/usr/lib/systemd/system/</code>). And then prof.. ehm <a href="https://gist.github.com/kouk/d12753757d506f97e13f#file-example-health-check-script-with-systemd-socket-activation">test it first</a>!.</p>
+<p>This is perhaps just a hack, but it works OK in many cases.</p>

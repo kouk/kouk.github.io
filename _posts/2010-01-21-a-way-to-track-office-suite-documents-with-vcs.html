@@ -1,0 +1,36 @@
+---
+layout: post
+title: a way to track office-suite documents with VCS?
+date: 2010-01-21 10:15:45.000000000 +02:00
+categories:
+- tech
+tags:
+- diff
+- dropbox
+- dvcs
+- mercurial
+- microsof office
+- odt
+- openoffice
+- scm
+- xml
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '600927'
+  delicious: a:3:{s:5:"count";s:1:"0";s:9:"post_tags";s:0:"";s:4:"time";s:10:"1294636367";}
+  reddit: a:2:{s:5:"count";s:1:"0";s:4:"time";s:10:"1306000217";}
+author:
+  login: kouk
+  email: koukopoulos@gmail.com
+  display_name: Konstantinos Koukopoulos
+  first_name: ''
+  last_name: ''
+excerpt: !ruby/object:Hpricot::Doc
+  options: {}
+---
+<p>Nice to hear <a href="http://www.digital-era.org/">Sofia</a>'s <a href="http://www.digital-era.org/academia/?p=317">happy with dropbox</a> as a solution for finding the latest version of her dissertation. I was thinking about what she could do if she had to track older or alternative versions of her dissertation, perhaps even offline, instead of only the latest version in <a href="https://www.dropbox.com/">Dropbox</a>. Of course I thought of <a href="mercurial.selenic.com">Mercurial</a> which I use for my <abbr title="Source Code Management" class="initialism">SCM needs.  The problem with Mercurial is that it is good at working with text files, not binary files like those of popular office suites. So I searched a bit and found a possible solution (<em>although I haven't implemented and tested it yet</em>):</p>
+<p><a href="http://www.ensode.net/roller/dheffelfinger/">David Heffelfinger</a> posted about <a href="http://www.ensode.net/roller/dheffelfinger/entry/openoffice_documents_version_control_with">OpenOffice.org Document Version Control With Mercurial</a> in which he writes about using the flat version of the <a href="http://openoffice.org">OpenOffice.org</a> <abbr title="Open Document Text" class="initialism">ODT format. According to him this solution is not satisfactory because even in the flat format, a single letter change will change all sorts of metadata in other parts of the file. Due to this it's hard to distinguish between the important changes between two versions and the inconsequential. Instead of going this way he is currently using the <a href="http://www.selenic.com/mercurial/wiki/index.cgi/HandlingOpenDocumentFiles">oodiff</a> hack from the Mercurial website.</p>
+<p>Obviously a hack would not be an acceptable solution for Sofia to adopt, except if she desperately needed the ability to track changes and could live with using OpenOffice instead of Word (or whatever she's using). But a <a href="http://www.ensode.net/roller/dheffelfinger/entry/openoffice_documents_version_control_with#comment-1245657089506">comment on David's post</a> refers to an interesting tool called <a href="http://www.scootersoftware.com/">Beyond Compare</a> which seems to be able to generate differences both for Microsoft Office XML files and OpenOffice ODT files! They claim integration with popular <abbr title="Distributed Version Control System" class="initialism">DVCS's. I wonder how easy it would be to integrate Beyond Compare into say <a href="http://tortoisehg.bitbucket.org/">TortoiseHG</a>. Has anyone done this? Maybe I will try it sometime soon.</p>
+<p>Any other suggestions for tracking office suite documents with a <abbr title="Distributed Version Control System" class="initialism">DVCS?</abbr></abbr></abbr></abbr></p>

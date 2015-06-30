@@ -1,0 +1,33 @@
+---
+layout: post
+title: debugging python objects and fields with gdb
+date: 2014-09-25 15:26:40.000000000 +03:00
+categories: []
+tags: []
+status: publish
+type: post
+published: true
+meta:
+  _wpas_skip_facebook: '1'
+  _wpas_skip_google_plus: '1'
+  _wpas_skip_linkedin: '1'
+  _wpas_skip_tumblr: '1'
+  _wpas_skip_path: '1'
+  _rest_api_published: '1'
+  _rest_api_client_id: "-1"
+  publicize_twitter_user: koukopoulos
+  publicize_twitter_url: http://t.co/XyHEvhTeNC
+  _wpas_done_14391: '1'
+  _publicize_done_external: a:1:{s:7:"twitter";a:1:{i:13858422;b:1;}}
+author:
+  login: kouk
+  email: koukopoulos@gmail.com
+  display_name: Konstantinos Koukopoulos
+  first_name: ''
+  last_name: ''
+excerpt: !ruby/object:Hpricot::Doc
+  options: {}
+---
+<p>Sometimes your python code crashes or runs into a deadlock. For this the <a title="Debugging Python with GDB" href="https://wiki.python.org/moin/DebuggingWithGdb">Python Extension for GDB 7 </a>are very handy. On one mainstream Linux distribution this was automatically available when the devel/debug package for python was installed. But this extension has certain limitations, and one that I found quite important was the ability to print individual fields of objects. The "py-print" command truncates it's output so for a relatively complex object you can't really see the member attributes.</p>
+<p>After looking at the source for this extension I saw it would be relatively easy to fix this. I wrote another command that actually goes through the object's dictionary and prints out the requested field only. Here's the gist:</p>
+<p>https://gist.github.com/kouk/5c2e725bef8b54aae6e0</p>

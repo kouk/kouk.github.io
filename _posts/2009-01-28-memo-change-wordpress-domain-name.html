@@ -1,0 +1,38 @@
+---
+layout: post
+title: 'memo: change wordpress domain name'
+date: 2009-01-28 08:19:51.000000000 +02:00
+categories:
+- memo
+tags:
+- domain
+- moving
+- mysql
+- sql
+- wordpress
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '600927'
+  delicious: a:3:{s:5:"count";s:1:"1";s:9:"post_tags";s:0:"";s:4:"time";s:10:"1245171616";}
+  reddit: a:2:{s:5:"count";s:1:"0";s:4:"time";s:10:"1245171616";}
+author:
+  login: kouk
+  email: koukopoulos@gmail.com
+  display_name: Konstantinos Koukopoulos
+  first_name: ''
+  last_name: ''
+excerpt: !ruby/object:Hpricot::Doc
+  options: {}
+---
+<p>If you want to move a <a href="http://wordpress.org">wordpress.org </a>installation to a new domain these commands are necessary to bring the database up to speed with the domain name change:</p>
+<pre>
+UPDATE wp_options SET option_value = replace(option_value, 'http://old', 'http://new');
+
+UPDATE wp_posts SET guid = replace(guid, 'http://old','http://new);
+
+UPDATE wp_posts SET post_content = replace(post_content, 'http://old', 'http://new');
+</pre>
+<p>This is only for domain name change, if you are also moving to a different host then more db manipulation is necessary, like for example changing the <code>upload_path</code> option in the <code>wp_options</code>.</p>
+<p><a href="http://www.mydigitallife.info/2007/10/01/how-to-move-wordpress-blog-to-new-domain-or-location/">Kudos</a> for this tip.</p>

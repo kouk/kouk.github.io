@@ -1,0 +1,51 @@
+---
+layout: post
+title: how to insert any unicode character over VNC
+date: 2010-11-23 12:38:53.000000000 +02:00
+categories:
+- tech
+tags:
+- grnet
+- iconv
+- unicode
+- utf-8
+- vim
+- vima
+- vm
+- vnc
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '600927'
+  geo_latitude: '37.979180'
+  geo_longitude: '23.716647'
+  geo_accuracy: '4584'
+  geo_address: "Αθήνα, Ελλάς"
+  geo_public: '1'
+  _wp_old_slug: ''
+  delicious: a:3:{s:5:"count";s:1:"0";s:9:"post_tags";s:0:"";s:4:"time";s:10:"1294636330";}
+  reddit: a:2:{s:5:"count";s:1:"0";s:4:"time";s:10:"1305067049";}
+author:
+  login: kouk
+  email: koukopoulos@gmail.com
+  display_name: Konstantinos Koukopoulos
+  first_name: ''
+  last_name: ''
+excerpt: !ruby/object:Hpricot::Doc
+  options: {}
+---
+<p>Been using <a href="http://noc.grnet.gr/node/575">GRNET's ViMA</a> service a lot lately and sometimes it happens while using a vm's console via VNC that I need to input a unicode character in a file.  The VNC viewer applet that is provided, as well as any vncviewer I've tried can't seem to manage inputing these characters directly via the keyboard. Here's how I do it:</p>
+<ol>
+<li>
+<p>Install <a href="http://www.vim.gr">Vim</a> on the vm with apt-get, yum or whatever</p>
+</li>
+<li>
+<p>Localy find the unicode codepoint of the desired character:</p>
+<pre>echo "Ψ" | iconv -f utf-8 -t iso8859-1 --unicode-subst="&lt;U+%04X&gt;"</pre>
+<p>In this case it prints <code>&lt;U+03A8&gt;</code></p>
+</li>
+<li>Open the file you want to input into on the vm with vim.</li>
+<li>In input mode, type Control-V, u, and the four hexadecimal digits (i.e. 0,3,A and 8)</li>
+<li>Viola!</li>
+</ol>

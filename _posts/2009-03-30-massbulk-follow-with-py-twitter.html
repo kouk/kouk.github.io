@@ -1,0 +1,80 @@
+---
+layout: post
+title: Mass/Bulk Follow with py-twitter
+date: 2009-03-30 13:37:58.000000000 +03:00
+categories:
+- art
+- programming
+- tech
+tags:
+- "#twitter"
+- bulk
+- follow
+- py-twitter
+- python
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '600927'
+  delicious: a:3:{s:5:"count";s:1:"0";s:9:"post_tags";s:0:"";s:4:"time";s:10:"1275237055";}
+  reddit: a:2:{s:5:"count";s:1:"0";s:4:"time";s:10:"1277048052";}
+author:
+  login: kouk
+  email: koukopoulos@gmail.com
+  display_name: Konstantinos Koukopoulos
+  first_name: ''
+  last_name: ''
+excerpt: !ruby/object:Hpricot::Doc
+  options: {}
+---
+<p>While trying to maintain the <a href="http://www.twitter.com/greekliberals">Greek Liberals twitter</a>  account, specifically trying to follow a bunch of people that <a href="http://www.twitter.com/koukopoulos">I also follow</a>, I didn't manage to find a satisfactory solution to automatically follow a specific list of screen names. </p>
+<p><a href="http://zbowling.com">Zac Bowling</a>'s <a href="http://zbowling.com/code/twitter.html">bulk following tool</a> wasn't working for me (I get an authentication error). The only other promising solution is <a href="http://www.flashtweet.com/">Flashtweet</a> but they insist on loading the list of new people to follow from another twitter account's follow list. At first that might not seem like a problem, since I could simply load my personal twitter account friends in Flashtweet and check the people I wanted to follow.  But I already had a hand-picked list of people that I wanted the GreekLiberals twitter account to follow. I created this list by going through the CSV file that <a href="http://tweeple.com">Tweeple</a> exports where I can browse all the details of a user instead of just the twitter name like in Flashtweet's interface. I don't want to start mindlessly following people who for starters might not even speak greek or be otherwise interested in dialogue with the <a href="http://www.greekliberals.net">Greek Liberals</a>.</p>
+<p>So I decided to write a <a href="http://code.google.com/p/python-twitter/">py-twitter</a> script to do the importing. Here it is:<br />
+[sourcecode language='python']<br />
+import twitter<br />
+import simplejson<br />
+from urllib2 import HTTPError, URLError</p>
+<p>class MassFollower(twitter.Api):<br />
+   ''' Follow a list of people '''</p>
+<p>   def AllFriends(self):<br />
+      friends = []<br />
+      while (not len(friends) % 100) :<br />
+         # see http://code.google.com/p/python-twitter/issues/detail?id=20<br />
+         friends.extend(self.GetFriends(page=((len(friends)/100)+1)))<br />
+      return friends</p>
+<p>   def MassFollow(self,names):<br />
+      for name in set(names)-set([f.screen_name for f in self.AllFriends()]):<br />
+         if not self.GetUser(name).protected:<br />
+            try:<br />
+               self.CreateFriendship(name)<br />
+            except HTTPError, e:<br />
+               print "got error with code",e.code<br />
+               # see http://code.google.com/p/python-twitter/issues/detail?id=33<br />
+               if e.code == 401 or e.code == 403:<br />
+                  data=simplejson.loads(e.read())<br />
+                  print "got data", data<br />
+                  if (hasattr(data,'error')):<br />
+                     print "can't follow ", name, " because ", err.error<br />
+                     continue<br />
+               raise</p>
+<p>if __name__ == "__main__":<br />
+   import sys<br />
+   import getpass<br />
+   u=sys.argv[1]<br />
+   file=open(sys.argv[2],'r')<br />
+   p=getpass.getpass("Twitter password: ")<br />
+   try:<br />
+      api = MassFollower(username=u,password=p)<br />
+      api.MassFollow([ line.strip() for line in file ])<br />
+   except IOError, e:<br />
+      if hasattr(e, 'reason'):<br />
+         print "Can't contact twitter:", e.reason<br />
+      elif hasattr(e, 'code'):<br />
+         if e.code==400:<br />
+            print "Probably struck rate limit, try again later."<br />
+         else:<br />
+            print 'The server couldn\'t fulfill the request: code',e.code<br />
+[/sourcecode]</p>
+<p>Kudos to <a href="http://blog.saers.com/archives/2009/01/31/lasttweetpy/">Niklas Saers</a> whose own py-twitter utility, <a href="http://blog.saers.com/archives/2009/01/31/lasttweetpy/">lasttweet.py</a>, tipped me off to the <a href="http://code.google.com/p/python-twitter/issues/detail?id=20"><code>page</code></a> parameter argument to <a href="http://static.unto.net/python-twitter/0.5/doc/twitter.html#Api-GetFriends"><code>GetFriends</code></a> method. At the time of this writing, an observant fellow will notice that, according to the aforelinked docs, there is no parameter named <code>page</code>. This is why this script is currently dependent on a version of py-twitter greater than 0.5, which is currently the stable version. So basically you need to get a svn checkout and install it manually on your system.</p>
+<p>Apart from being my first use of the twitter API it is also the first semi-usefull thing I've written in python, so I would be gratefull for criticism or comments regarding the code above.</p>
