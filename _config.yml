@@ -29,7 +29,7 @@ links:
 timezone:    Europe/Athens
 future:      true
 highlighter: pygments
-markdown:    rdiscount
+markdown:    kramdown
 
 defaults:
   -
