@@ -2,7 +2,13 @@
 <html lang="en">
 <meta charset="utf-8">
 <title>{% if page.title %}{{ page.title }} &#8211; {% endif %}{{ site.title }}</title>
-<!-- <script type="text/javascript">window.liveSettings={api_key:"3eb514d79cb14699809ed1b339c1613a"}</script> 
+<script type="text/javascript">
+  if (window.location.href.search('about') > 0) {
+    window.liveSettings={api_key:"76de21850dba407eab1e88d646404f70"};
+  } else {
+    window.liveSettings={api_key:"3eb514d79cb14699809ed1b339c1613a"};
+  } 
+</script> 
 <script type="text/javascript" src="//cdn.transifex.com/live.js"></script>-->
 <meta name="description" content="{{ page.description }}">
 <meta name="keywords" content="{{ page.tags | join: ', ' }}">
